@@ -38,7 +38,7 @@
     "start_window": "main",
     "windows": {
       "main": {
-        "file": "dist/renderer/app.js",
+        "file": "public/index.html",
         "show_in_taskbar": true,
         "transparent": false,
         "resizable": true,
@@ -49,26 +49,6 @@
         "min_size": {
           "width": 350,
           "height": 280
-        }
-      },
-      "overlay": {
-        "file": "dist/renderer/overlay.js",
-        "transparent": true,
-        "clickthrough": false,
-        "resizable": false,
-        "in_game_only": true,
-        "size": {
-          "width": 320,
-          "height": 180
-        }
-      },
-      "dashboard": {
-        "file": "dist/renderer/dashboard.js",
-        "show_in_taskbar": true,
-        "resizable": true,
-        "size": {
-          "width": 1200,
-          "height": 800
         }
       }
     },
