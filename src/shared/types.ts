@@ -42,6 +42,7 @@ export interface GameData {
   playerChampion: string;
   playerLevel: number;
   playerGold: number;
+  objectives?: any[];
 }
 
 export interface GameEvent {
