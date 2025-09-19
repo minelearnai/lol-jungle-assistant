@@ -85,8 +85,23 @@ export interface AppConfig {
   };
 }
 
-export interface OverwolfEvents {
-  gameInfo: any;
-  gameEvents: any;
-  launchEvents: any;
+// Dodatkowe typy dla kompatybilności
+export interface PlayerData {
+  championName: string;
+  level: number;
+  currentGold: number;
+  position: { x: number; y: number };
+}
+
+export interface CampData {
+  name: JungleCamp;
+  respawnTimer: number;
+  isAlive: boolean;
+}
+
+export interface TrackedCamp {
+  name: string;
+  isAlive: boolean;
+  respawnTime: number | null;
+  priority: number;
 }
