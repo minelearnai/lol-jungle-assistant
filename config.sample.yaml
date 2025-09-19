@@ -1,0 +1,45 @@
+# LoL Jungle Assistant Configuration
+# Copy this file to config.yaml and customize your settings
+
+# Summoner Information
+summoner_name: ""              # Your summoner name (optional)
+region: "EUW1"                 # Your region (EUW1, NA1, KR, etc.)
+riot_api_key: ""               # Optional Riot API key for enhanced features
+
+# Data Sources
+use_live_client: true          # Use Live Client Data API (recommended)
+use_overwolf_events: true      # Use Overwolf Game Events (auto-detected)
+
+# Update Settings
+update_interval_seconds: 3     # How often to update data (1-10 seconds)
+
+# Jungle Tracking Features
+jungle_tracking:
+  camp_prediction_enabled: true      # Enable enemy camp estimation
+  enemy_estimation_enabled: true     # Track enemy jungler movements
+  scuttle_priority_alerts: true      # Scuttle crab priority notifications
+  pathing_suggestions: true          # Optimal pathing recommendations
+
+# Audio Settings
+tts_enabled: true             # Text-to-speech announcements
+tts_volume: 0.7               # TTS volume (0.0 - 1.0)
+sound_alerts: true            # Sound notifications for objectives
+
+# UI Settings
+overlay_enabled: true         # Show in-game overlay
+overlay:
+  show_next_camp: true        # Display next optimal camp
+  show_scuttle_priority: true # Display scuttle priority indicator
+  show_recommendations: true  # Show strategic recommendations
+  show_objective_timers: true # Show dragon/baron/herald timers
+  compact_mode: false         # Use compact overlay layout
+
+# Privacy & Telemetry
+telemetry_enabled: false      # Anonymous usage statistics (helps improve app)
+crash_reporting: true         # Automatic crash reporting
+data_retention_days: 30       # How long to keep local game data
+
+# Advanced Settings
+debug_mode: false             # Enable debug logging
+auto_start: false             # Start with Windows/system
+minimize_to_tray: true        # Minimize to system tray

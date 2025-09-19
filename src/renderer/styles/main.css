@@ -1,0 +1,142 @@
+/* LoL Jungle Assistant Styles */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', -apple-system, system-ui, sans-serif;
+  background: linear-gradient(135deg, #0a0e27 0%, #1e2328 100%);
+  color: #c9aa71;
+  line-height: 1.4;
+}
+
+.container {
+  padding: 16px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.card {
+  background: rgba(27, 27, 27, 0.9);
+  border: 1px solid #3c3c3c;
+  border-radius: 8px;
+  padding: 16px;
+  margin: 12px 0;
+  backdrop-filter: blur(10px);
+}
+
+.card h3 {
+  margin: 0 0 12px 0;
+  color: #f0e6d2;
+}
+
+.badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 12px;
+  background: #463714;
+  color: #c9aa71;
+  margin: 2px 4px;
+}
+
+.badge.success {
+  background: #1e4d1e;
+  color: #4caf50;
+}
+
+.badge.warning {
+  background: #4d3d1e;
+  color: #ff9800;
+}
+
+.badge.error {
+  background: #4d1e1e;
+  color: #f44336;
+}
+
+.btn {
+  background: linear-gradient(135deg, #c9aa71 0%, #f0e6d2 100%);
+  color: #0a0e27;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(201, 170, 113, 0.3);
+}
+
+.overlay {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  width: 320px;
+  background: rgba(10, 14, 39, 0.95);
+  border: 2px solid #c9aa71;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 13px;
+  font-weight: 500;
+  z-index: 9999;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+}
+
+.overlay-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.overlay-action {
+  background: rgba(15, 15, 15, 0.8);
+  padding: 8px;
+  border-radius: 4px;
+  margin: 4px 0;
+  border-left: 3px solid #7CFC00;
+}
+
+.overlay-timers {
+  display: flex;
+  gap: 12px;
+  font-size: 11px;
+  opacity: 0.8;
+}
+
+.priority-high { color: #ff4444; }
+.priority-medium { color: #ffaa44; }
+.priority-low { color: #44ff44; }
+
+.jungle-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin: 16px 0;
+}
+
+.metric-card {
+  background: rgba(30, 35, 40, 0.7);
+  padding: 12px;
+  border-radius: 6px;
+  text-align: center;
+}
+
+.metric-value {
+  font-size: 24px;
+  font-weight: bold;
+  color: #f0e6d2;
+}
+
+.metric-label {
+  font-size: 12px;
+  opacity: 0.7;
+  margin-top: 4px;
+}

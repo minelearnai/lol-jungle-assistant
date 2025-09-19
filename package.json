@@ -1,0 +1,67 @@
+{
+  "name": "lol-jungle-assistant",
+  "version": "0.1.0",
+  "description": "Jungle-focused decision assistant for League of Legends with Overwolf integration",
+  "main": "dist/main/main.js",
+  "author": "minelearnai",
+  "license": "MIT",
+  "homepage": "https://github.com/minelearnai/lol-jungle-assistant",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/minelearnai/lol-jungle-assistant.git"
+  },
+  "scripts": {
+    "dev": "concurrently \"npm:build:watch\" \"npm:serve\"",
+    "serve": "wait-on dist/renderer/app.js && electron . --overwolf",
+    "build": "npm run build:main && npm run build:renderer",
+    "build:watch": "concurrently \"npm:build:main:watch\" \"npm:build:renderer:watch\"",
+    "build:main": "tsc -p tsconfig.main.json",
+    "build:main:watch": "tsc -p tsconfig.main.json --watch",
+    "build:renderer": "webpack --config webpack.renderer.js --mode production",
+    "build:renderer:watch": "webpack --config webpack.renderer.js --watch --mode development",
+    "lint": "eslint src --ext .ts,.tsx || true",
+    "test": "jest",
+    "dist": "npm run build && electron-builder",
+    "dist:win": "npm run build && electron-builder --win",
+    "dist:mac": "npm run build && electron-builder --mac", 
+    "dist:linux": "npm run build && electron-builder --linux"
+  },
+  "build": {
+    "appId": "com.minelearnai.lol-jungle-assistant",
+    "productName": "LoL Jungle Assistant",
+    "directories": { "output": "dist-electron" },
+    "files": ["dist/**/*", "overwolf/**/*", "assets/**/*", "public/**/*", "config.sample.yaml"],
+    "win": { "target": "nsis", "icon": "assets/icons/icon.ico" },
+    "mac": { "target": "dmg", "icon": "assets/icons/icon.icns" },
+    "linux": { "target": "AppImage", "icon": "assets/icons/icon.png" }
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.11",
+    "@types/node": "^20.11.30", 
+    "@types/react": "^18.2.66",
+    "@types/react-dom": "^18.2.22",
+    "@typescript-eslint/eslint-plugin": "^7.3.1",
+    "@typescript-eslint/parser": "^7.3.1",
+    "concurrently": "^8.2.2",
+    "css-loader": "^6.11.0",
+    "electron": "^28.2.0",
+    "electron-builder": "^24.13.3",
+    "eslint": "^8.57.0",
+    "jest": "^29.7.0",
+    "style-loader": "^3.3.4",
+    "ts-jest": "^29.1.2",
+    "ts-loader": "^9.5.1", 
+    "typescript": "^5.4.2",
+    "wait-on": "^7.2.0",
+    "webpack": "^5.91.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "@overwolf/overwolf-api-ts": "^5.0.0",
+    "axios": "^1.7.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0", 
+    "yaml": "^2.5.0",
+    "zustand": "^4.5.2"
+  }
+}
