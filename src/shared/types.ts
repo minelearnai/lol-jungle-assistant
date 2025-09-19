@@ -60,7 +60,7 @@ export interface JungleRecommendation {
   priority: 'low' | 'medium' | 'high' | 'critical';
   title: string;
   description: string;
-  timeframe: number; // seconds until action should be taken
+  timeframe: number;
   target?: JungleCamp | Lane;
   reasoning: string[];
 }
