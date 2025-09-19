@@ -9,70 +9,41 @@
     "email": "minelearnai@example.com"
   },
   "license": "MIT",
-  "homepage": "https://github.com/minelearnai/lol-jungle-assistant",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/minelearnai/lol-jungle-assistant.git"
-  },
   "overwolf": {
-    "packages": ["gep", "overlay"]
+    "packages": [
+      "gep",
+      "overlay"
+    ]
   },
   "scripts": {
     "start": "ow-electron .",
-    "dev": "concurrently \"npm:build:watch\" \"npm:start\"",
-    "serve": "wait-on dist/renderer/app.js && electron . --overwolf",
+    "start:electron": "electron .",
+    "dev": "concurrently \"npm:build:watch\" \"npm:start:electron\"",
     "build": "npm run build:main && npm run build:renderer",
-    "build:watch": "concurrently \"npm:build:main:watch\" \"npm:build:renderer:watch\"",
     "build:main": "tsc -p tsconfig.main.json",
-    "build:main:watch": "tsc -p tsconfig.main.json --watch",
     "build:renderer": "webpack --config webpack.renderer.js --mode production",
-    "build:renderer:watch": "webpack --config webpack.renderer.js --watch --mode development",
-    "build:ow-electron": "ow-electron-builder --config.extends=@overwolf/ow-electron",
-    "lint": "eslint src --ext .ts,.tsx || true",
-    "test": "jest",
-    "dist": "npm run build && electron-builder",
-    "dist:win": "npm run build && electron-builder --win",
-    "dist:mac": "npm run build && electron-builder --mac", 
-    "dist:linux": "npm run build && electron-builder --linux"
-  },
-  "build": {
-    "appId": "com.minelearnai.lol-jungle-assistant",
-    "productName": "LoL Jungle Assistant",
-    "directories": { "output": "dist-electron" },
-    "files": ["dist/**/*", "overwolf/**/*", "assets/**/*", "public/**/*", "config.sample.yaml"],
-    "win": { "target": "nsis", "icon": "assets/icons/icon.ico" },
-    "mac": { "target": "dmg", "icon": "assets/icons/icon.icns" },
-    "linux": { "target": "AppImage", "icon": "assets/icons/icon.png" }
+    "build:ow-electron": "ow-electron-builder",
+    "build:watch": "npm run build -- --watch"
   },
   "devDependencies": {
-    "@overwolf/ow-electron": "^latest",
-    "@overwolf/ow-electron-builder": "^latest",
-    "@types/jest": "^29.5.11",
-    "@types/node": "^20.11.30", 
-    "@types/react": "^18.2.66",
-    "@types/react-dom": "^18.2.22",
-    "@typescript-eslint/eslint-plugin": "^7.3.1",
-    "@typescript-eslint/parser": "^7.3.1",
+    "@overwolf/ow-electron": "^37.2.6",
+    "@overwolf/ow-electron-builder": "^25.0.7",
+    "@types/react": "^19.1.13",
+    "@types/react-dom": "^19.1.9",
+    "@types/yaml": "^1.9.6",
     "concurrently": "^8.2.2",
     "css-loader": "^6.11.0",
     "electron": "^28.2.0",
-    "electron-builder": "^24.13.3",
-    "eslint": "^8.57.0",
-    "jest": "^29.7.0",
     "style-loader": "^3.3.4",
-    "ts-jest": "^29.1.2",
-    "ts-loader": "^9.5.1", 
+    "ts-loader": "^9.5.1",
     "typescript": "^5.4.2",
-    "wait-on": "^7.2.0",
     "webpack": "^5.91.0",
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
-    "@overwolf/overwolf-api-ts": "^5.0.0",
-    "axios": "^1.7.2",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0", 
-    "yaml": "^2.5.0",
-    "zustand": "^4.5.2"
+    "@overwolf/overwolf-api-ts": "^1.0.15",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "yaml": "^2.8.1"
   }
 }
