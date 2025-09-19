@@ -1,130 +1,158 @@
-# 🚀 Quick Start Guide - LoL Jungle Assistant
+# 🚀 QUICKSTART - Natychmiastowa naprawa!
 
-## 🔄 Szybkie uruchomienie (5 minut)
+## 🚨 BŁĄD: "Unable to find Electron app at F:/lol-jungle-assistant"
 
-### 1. Clone i install
+**Główna przyczyna:** Brak skompilowanych plików w folderze `dist/`
+
+## 🎯 NATYCHMIASTOWA NAPRAWA (2 minuty):
+
+### Krok 1: Wyczyść i reinstall
+```bash
+# Wyczyść wszystko
+rm -rf node_modules package-lock.json dist/
+npm cache clean --force
+
+# Fresh install
+npm install
+```
+
+### Krok 2: Kompiluj aplikację
+```bash
+# Build main process (TypeScript → JavaScript)
+npm run build:main
+
+# Build renderer (React → JavaScript)  
+npm run build:renderer
+
+# Sprawdź czy pliki się utworzyły
+ls -la dist/main/main.js      # Musi istnieć!
+ls -la dist/renderer/app.js   # Musi istnieć!
+```
+
+### Krok 3: Uruchom
+```bash
+# Teraz powinno działać
+npm start
+```
+
+---
+
+## 🔧 Co zostało już naprawione na GitHub:
+
+✅ **manifest.json** - Poprawiony z `dist/renderer/app.js` na `public/index.html`
+✅ **public/index.html** - Zaktualizowany z lepszym error handling
+✅ **package.json** - Poprawne wersje dependencies
+✅ **TypeScript configs** - tsconfig.json, tsconfig.main.json 
+✅ **Webpack config** - webpack.renderer.js
+
+---
+
+## 🐛 Dalsza diagnoza jeśli nie działa:
+
+### A. Błąd: "tsc not found" lub "webpack not found"
+```bash
+# Install tools globalnie
+npm install -g typescript webpack webpack-cli
+
+# Lub użyj npx
+npx tsc -p tsconfig.main.json
+npx webpack --config webpack.renderer.js --mode production
+```
+
+### B. Błąd: "Cannot find module 'react'"
+```bash
+# Dodaj React dependencies
+npm install react react-dom
+npm install --save-dev @types/react @types/react-dom
+```
+
+### C. Błąd kompilacji TypeScript
+```bash
+# Sprawdź błędy TypeScript
+npx tsc -p tsconfig.main.json --noEmit
+
+# Jeśli są błędy, możesz tymczasowo wyłączyć strict mode
+# W tsconfig.json ustaw: "strict": false
+```
+
+### D. App się uruchamia ale nie ładuje zawartości
+```bash
+# Sprawdź logi w DevTools (F12)
+# Szukaj błędów ładowania plików
+
+# Możesz też uruchomić w standard Electron:
+npm run start:electron
+```
+
+---
+
+## 🏁 Oćzekiwany rezultat:
+
+**Po uruchomieniu `npm start` powinieneś zobaczyć:**
+1. Okno aplikacji z tytułem "🌲 LoL Jungle Assistant"
+2. Ładny interfejs z jungle theme
+3. Komunikat "Ready! Your jungle coach is prepared"
+4. Brak czerwonych błędów w konsoli (F12)
+
+---
+
+## 🔄 Pełna procedure od zera:
+
+```bash
+# 1. Sklonuj (jeśli jeszcze nie masz)
+git clone https://github.com/minelearnai/lol-jungle-assistant.git
+cd lol-jungle-assistant
+
+# 2. Wyczyść i install
+rm -rf node_modules package-lock.json dist/
+npm install
+
+# 3. Install ow-electron globally
+npm install -g @overwolf/ow-electron
+
+# 4. Build aplikację
+npm run build
+
+# 5. Uruchom
+npm start
+```
+
+---
+
+**🎯 Najważniejszy punkt do zapamiętania:** Problem był spowodowany tym, że manifest.json wskazywał na nieistniejące pliki JS zamiast na HTML. **TO JUŻ ZOSTAŁO NAPRAWIONE** na GitHub!
+
+Teraz wystarczy tylko skompilować aplikację (build) i powinna działać! 🚀
+
+---
+
+## 🌲 Starsze instrukcje (zachowane dla referencji):
+
+### Szybkie uruchomienie (standardowe)
 ```bash
 git clone https://github.com/minelearnai/lol-jungle-assistant.git
 cd lol-jungle-assistant
 npm install
+npm run build
+npm start
 ```
 
-### 2. Dodaj ikony (KRYTYCZNE!)
+### Dodaj ikony (opcjonalne)
 ```bash
 # Stwórz folder ikon
 mkdir -p assets/icons
 
-# Dodaj jakiekolwiek PNG ikony (256x256) - można użyć tej samej dla wszystkich:
+# Dodaj PNG ikony (256x256):
 # - icon.png
 # - icon-gray.png  
 # - launcher.png
-
-# LUB skorzystaj z wygenerowanych ikon w SETUP_ICONS.md
 ```
 
-### 3. Build i uruchom
+### Development workflow
 ```bash
-# Install ow-electron globalnie
-npm install -g @overwolf/ow-electron
-
-# Build
-npm run build
-
-# Uruchom w Overwolf Electron
-npm start
+npm run dev          # Development z hot reload
+npm run build:watch  # Build w trybie watch
+npm test             # Testy
+npm run lint         # Linting
 ```
 
-## ✅ Weryfikacja że działa
-
-1. **App się uruchamia** - widzisz okno "LoL Jungle Assistant"
-2. **Brak błędów manifest** - nie ma błędu "missing manifest.json"
-3. **Ikony wyświetlają się** - widzisz ikony w Overwolf
-4. **League detection** - gdy uruchomisz LoL, app powinien wykryć grę
-
-## 🐛 Najczęstsze problemy
-
-### ❌ "Couldn't load extension - missing 'manifest.json' file"
-**ROZWIĄZANIE**: manifest.json musi być w root directory (nie w /overwolf/)
-```bash
-# Sprawdź czy plik istnieje
-ls -la manifest.json
-# Powinien być widoczny w głównym folderze
-```
-
-### ❌ "Cannot find module '@overwolf/ow-electron'"
-**ROZWIĄZANIE**:
-```bash
-npm install -g @overwolf/ow-electron
-# LUB lokalnie:
-npm install @overwolf/ow-electron --save-dev
-```
-
-### ❌ Brak ikon w aplikacji
-**ROZWIĄZANIE**: Dodaj ikony do assets/icons/
-```bash
-# Sprawdź czy folder istnieje
-ls -la assets/icons/
-# Powinneś widzieć pliki: icon.png, icon-gray.png, launcher.png
-```
-
-### ❌ Build fails / TypeScript errors
-**ROZWIĄZANIE**:
-```bash
-# Wyczyść cache i reinstall
-npm run clean  # albo rm -rf node_modules dist
-npm install
-npm run build
-```
-
-### ❌ App nie wykrywa League of Legends
-**ROZWIĄZANIE**:
-1. Upewnij się że LoL jest włączony
-2. Uruchom jako administrator (Windows)
-3. Sprawdź logi w DevTools (F12)
-
-## 🛠️ Development workflow
-
-```bash
-# Development z hot reload
-npm run dev
-
-# Build w trybie development
-npm run build:watch
-
-# Uruchom testy
-npm test
-
-# Linting
-npm run lint
-```
-
-## 🎯 Co dalej?
-
-1. **Testuj z League**: Uruchom LoL i sprawdź czy app wykrywa grę
-2. **Customizuj ikony**: Zobacz SETUP_ICONS.md dla lepszych ikon
-3. **Konfiguracja**: Edytuj config.sample.yaml 
-4. **Hotkeys**: Spróbuj Ctrl+Shift+J w grze
-
-## 📈 Status projektu
-
-✅ **NAPRAWIONE**:
-- Missing manifest.json → przeniesiono do root
-- Package.json → dodano overwolf.packages
-- WebPreferences → włączono nodeIntegration
-- TypeScript types → dodano pełne definicje
-- React renderer → poprawiono entry point
-- Webpack config → poprawiono build pipeline
-- CSS styling → dodano LoL-themed UI
-
-🔄 **DO DODANIA** (opcjonalne):
-- Ikony wysokiej jakości
-- Riot API integration
-- Advanced jungle analytics
-- Sound notifications
-- Multiple language support
-
----
-
-**🎉 Jeśli wszystko działa - gratulacje! Masz działającą aplikację Overwolf dla jungle trackingu w LoL!**
-
-**❓ Problems?** Sprawdź [GitHub Issues](https://github.com/minelearnai/lol-jungle-assistant/issues) lub development logi w console.
+**🎮 Test w League of Legends:** Uruchom LoL i sprawdź czy app wykrywa grę!
