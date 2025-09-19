@@ -19,8 +19,9 @@ async function createMainWindow() {
     width: 420,
     height: 360,
     webPreferences: {
-      nodeIntegration: false,
-      contextIsolation: false
+      nodeIntegration: true,
+      contextIsolation: false,
+      enableRemoteModule: true
     },
     show: true,
     icon: path.join(__dirname, '../../assets/icons/icon.png')
@@ -34,28 +35,35 @@ async function createMainWindow() {
 }
 
 async function initialize() {
-  await configManager.loadConfig();
-  await overwolfManager.initialize();
-  await createMainWindow();
+  console.log('Initializing jungle tracker...');
+  
+  try {
+    await configManager.loadConfig();
+    await overwolfManager.initialize();
+    await createMainWindow();
 
-  // Setup jungle data pipeline
-  dataCollector.on('gameData', (gameData) => {
-    const jungleState = jungleTracker.updateState(gameData);
-    const recommendations = decisionEngine.getRecommendations(jungleState, gameData);
-    
-    // Send updates to renderer processes
-    mainWindow?.webContents.send('jungle-update', {
-      state: jungleState,
-      recommendations
+    // Setup jungle data pipeline
+    dataCollector.on('gameData', (gameData) => {
+      const jungleState = jungleTracker.updateState(gameData);
+      const recommendations = decisionEngine.getRecommendations(jungleState, gameData);
+      
+      // Send updates to renderer processes
+      mainWindow?.webContents.send('jungle-update', {
+        state: jungleState,
+        recommendations
+      });
     });
-  });
 
-  // Start monitoring if in game
-  const isInGame = await dataCollector.checkGameState();
-  if (isInGame) {
-    console.log('League of Legends detected, starting monitoring...');
-    const config = configManager.getConfig();
-    await dataCollector.startMonitoring(config.update_interval_seconds * 1000);
+    // Start monitoring if in game
+    const isInGame = await dataCollector.checkGameState();
+    if (isInGame) {
+      console.log('League of Legends detected, starting monitoring...');
+      const config = configManager.getConfig();
+      await dataCollector.startMonitoring(config.update_interval_seconds * 1000);
+    }
+  } catch (error) {
+    console.error('Initialization error:', error);
+    // Continue with basic functionality even if some parts fail
   }
 }
 
@@ -75,7 +83,38 @@ app.on('activate', () => {
 });
 
 // IPC handlers
-ipcMain.handle('get-config', () => configManager.getConfig());
-ipcMain.handle('update-config', (_, config) => configManager.updateConfig(config));
-ipcMain.handle('get-jungle-state', () => jungleTracker.getCurrentState());
-ipcMain.handle('check-game-state', () => dataCollector.checkGameState());
+ipcMain.handle('get-config', () => {
+  try {
+    return configManager.getConfig();
+  } catch (error) {
+    console.error('Error getting config:', error);
+    return {};
+  }
+});
+
+ipcMain.handle('update-config', (_, config) => {
+  try {
+    return configManager.updateConfig(config);
+  } catch (error) {
+    console.error('Error updating config:', error);
+    return false;
+  }
+});
+
+ipcMain.handle('get-jungle-state', () => {
+  try {
+    return jungleTracker.getCurrentState();
+  } catch (error) {
+    console.error('Error getting jungle state:', error);
+    return null;
+  }
+});
+
+ipcMain.handle('check-game-state', () => {
+  try {
+    return dataCollector.checkGameState();
+  } catch (error) {
+    console.error('Error checking game state:', error);
+    return false;
+  }
+});
