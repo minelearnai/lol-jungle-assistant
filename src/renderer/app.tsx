@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import './styles/app.css';
 
 interface JungleState {
@@ -68,7 +68,7 @@ const App: React.FC = () => {
   if (error) {
     return (
       <div className="app error">
-        <h1>LoL Jungle Assistant</h1>
+        <h1>🌲 LoL Jungle Assistant</h1>
         <div className="error-message">{error}</div>
         <div className="status disconnected">Disconnected</div>
       </div>
@@ -77,7 +77,7 @@ const App: React.FC = () => {
 
   return (
     <div className="app">
-      <h1>LoL Jungle Assistant</h1>
+      <h1>🌲 LoL Jungle Assistant</h1>
       
       <div className="status-bar">
         <div className={`status ${gameConnected ? 'connected' : 'disconnected'}`}>
@@ -117,10 +117,11 @@ const App: React.FC = () => {
   );
 };
 
-// Render the app
+// Render the app using React 18+ createRoot
 const rootElement = document.getElementById('root');
 if (rootElement) {
-  ReactDOM.render(<App />, rootElement);
+  const root = ReactDOM.createRoot(rootElement);
+  root.render(<App />);
 } else {
   console.error('Root element not found');
 }
