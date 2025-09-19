@@ -10,12 +10,13 @@
             margin: 0;
             padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #0f1419;
+            background: linear-gradient(135deg, #0F2027 0%, #203A43 50%, #2C5364 100%);
             color: #f0e6d2;
             overflow: hidden;
         }
         #loading {
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             height: 100vh;
@@ -26,31 +27,91 @@
             width: 100%;
             height: 100vh;
         }
+        .jungle-title {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+            background: linear-gradient(45deg, #c89b3c, #f0e6d2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .status {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px;
+            text-align: center;
+        }
+        .message {
+            color: #cdbe91;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
     <div id="root">
-        <div id="loading">Loading LoL Jungle Assistant...</div>
+        <div id="loading">
+            <div class="jungle-title">🌲 LoL Jungle Assistant</div>
+            <div class="status">
+                <h2>Initializing jungle tracker...</h2>
+                <div class="message">Waiting for League of Legends connection</div>
+                <div class="message">Ready to dominate the Rift!</div>
+            </div>
+        </div>
     </div>
     
     <script>
         // Basic electron API exposure for development
         if (typeof require !== 'undefined') {
-            const { ipcRenderer } = require('electron');
-            
-            window.electronAPI = {
-                getJungleState: () => ipcRenderer.invoke('get-jungle-state'),
-                onJungleUpdate: (callback) => {
-                    ipcRenderer.on('jungle-update', (event, data) => callback(data));
-                },
-                getConfig: () => ipcRenderer.invoke('get-config'),
-                updateConfig: (config) => ipcRenderer.invoke('update-config', config),
-                checkGameState: () => ipcRenderer.invoke('check-game-state')
-            };
+            try {
+                const { ipcRenderer } = require('electron');
+                
+                window.electronAPI = {
+                    getJungleState: () => ipcRenderer.invoke('get-jungle-state'),
+                    onJungleUpdate: (callback) => {
+                        ipcRenderer.on('jungle-update', (event, data) => callback(data));
+                    },
+                    getConfig: () => ipcRenderer.invoke('get-config'),
+                    updateConfig: (config) => ipcRenderer.invoke('update-config', config),
+                    checkGameState: () => ipcRenderer.invoke('check-game-state')
+                };
+                console.log('✅ Electron APIs initialized');
+            } catch (error) {
+                console.warn('⚠️ Electron APIs not available:', error);
+            }
+        } else {
+            console.log('🌐 Running in browser mode');
         }
+        
+        // Update loading message after 2 seconds
+        setTimeout(() => {
+            const loadingDiv = document.getElementById('loading');
+            if (loadingDiv) {
+                loadingDiv.innerHTML = `
+                    <div class="jungle-title">🌲 LoL Jungle Assistant</div>
+                    <div class="status">
+                        <h2>Ready!</h2>
+                        <div class="message">Your jungle coach is prepared</div>
+                        <div class="message">Start a League game to begin tracking</div>
+                    </div>
+                `;
+            }
+        }, 2000);
     </script>
     
-    <!-- Load the compiled React app -->
-    <script src="../dist/renderer/app.js"></script>
+    <!-- Try to load the compiled React app, but don't break if it doesn't exist -->
+    <script>
+        // Dynamically load React app if it exists
+        const script = document.createElement('script');
+        script.src = '../dist/renderer/app.js';
+        script.onload = () => {
+            console.log('✅ React app loaded successfully');
+        };
+        script.onerror = () => {
+            console.warn('⚠️ React app not built yet. Run "npm run build" to compile.');
+        };
+        document.head.appendChild(script);
+    </script>
 </body>
 </html>
