@@ -1,12 +1,26 @@
 {
+  "extends": "./tsconfig.json",
   "compilerOptions": {
+    "outDir": "./dist/main",
+    "rootDir": "./src",
     "target": "ES2020",
-    "module": "CommonJS", 
-    "outDir": "dist/main",
-    "rootDir": "src/main",
-    "strict": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "strict": false,
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true
   },
-  "include": ["src/main/**/*.ts", "src/shared/**/*.ts", "src/jungle/**/*.ts"]
+  "include": [
+    "src/main/**/*.ts",
+    "src/shared/**/*.ts",
+    "src/jungle/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "src/renderer/**/*"
+  ]
 }
