@@ -1,0 +1,164 @@
+.app {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #0f1419, #1e2328);
+  color: #f0e6d2;
+  padding: 20px;
+  height: 100vh;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.app h1 {
+  margin: 0 0 20px 0;
+  font-size: 24px;
+  text-align: center;
+  color: #c89b3c;
+  text-shadow: 0 0 10px rgba(200, 155, 60, 0.3);
+}
+
+.status-bar {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.status {
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.status.connected {
+  background: rgba(0, 200, 0, 0.2);
+  color: #00ff00;
+  border: 1px solid #00ff00;
+}
+
+.status.disconnected {
+  background: rgba(200, 0, 0, 0.2);
+  color: #ff6b6b;
+  border: 1px solid #ff6b6b;
+}
+
+.jungle-tracker {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.team-jungle {
+  background: rgba(30, 35, 40, 0.8);
+  border: 1px solid #463714;
+  border-radius: 8px;
+  padding: 15px;
+}
+
+.team-jungle h3 {
+  margin: 0 0 15px 0;
+  color: #c89b3c;
+  font-size: 16px;
+  text-align: center;
+  border-bottom: 1px solid #463714;
+  padding-bottom: 8px;
+}
+
+.camps {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.camp {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid #3c3c41;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.camp:hover {
+  background: rgba(200, 155, 60, 0.1);
+  border-color: #c89b3c;
+}
+
+.camp-name {
+  font-size: 12px;
+  font-weight: 500;
+  color: #cdbe91;
+  text-transform: capitalize;
+}
+
+.camp-timer {
+  font-size: 11px;
+  font-weight: bold;
+  color: #ff6b6b;
+  background: rgba(255, 107, 107, 0.1);
+  padding: 2px 6px;
+  border-radius: 3px;
+  min-width: 50px;
+  text-align: center;
+}
+
+.camp-timer.available {
+  color: #00ff00;
+  background: rgba(0, 255, 0, 0.1);
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  text-align: center;
+}
+
+.loading div:first-child {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #c89b3c;
+}
+
+.help-text {
+  font-size: 12px;
+  color: #a09b8c;
+  max-width: 250px;
+  line-height: 1.4;
+}
+
+.error {
+  text-align: center;
+}
+
+.error-message {
+  background: rgba(255, 107, 107, 0.1);
+  color: #ff6b6b;
+  padding: 15px;
+  border-radius: 5px;
+  margin: 20px 0;
+  border: 1px solid #ff6b6b;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1e2328;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #463714;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #c89b3c;
+}
